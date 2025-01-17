@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +9,55 @@ namespace Victuz.Models
 {
     public class Event
     {
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+
+        [MaxLength(200), NotNull]
         public string Title { get; set; }
+
+        [NotNull]
         public DateTime Date { get; set; }
+
+        [MaxLength(300), NotNull]
         public string Location { get; set; }
+
         public string Description { get; set; }
-        public int Capacity { get; set; }
-        public List<int> Participants { get; set; }
+
+        [NotNull]
+        public int MaxParticipants { get; set; }
+
+        
 
         // Constructor
         public Event()
         {
-            Participants = new List<int>();
+           
         }
 
-        // Method to add a participant
-        public bool AddParticipant(int userId)
+
+        public void LoginUser(int userId)
         {
-            if (Participants.Count < Capacity)
-            {
-                Participants.Add(userId);
-                return true;
-            }
-            return false;
+            Console.WriteLine($"User {userId} logged into event {Title}.");
+        }
+
+        public void LogoutUser(int userId)
+        {
+            Console.WriteLine($"User {userId} logged out of event {Title}.");
+        }
+
+        public int AvailablePlaces(int participantCount)
+        {
+            return MaxParticipants - participantCount;
+        }
+
+        public void AddParticipant(int userId)
+        {
+            Console.WriteLine($"User {userId} added to event {Title}.");
+        }
+
+        public void RemoveParticipant(int userId)
+        {
+            Console.WriteLine($"User {userId} removed from event {Title}.");
         }
     }
 }

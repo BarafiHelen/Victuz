@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,25 +9,39 @@ namespace Victuz.Models
 {
     public class User
     {
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        [MaxLength(100), NotNull]
         public string Name { get; set; }
+
+        [MaxLength(15), NotNull]
+        public string PhoneNumber { get; set; }
+
+        [MaxLength(100), NotNull]
         public string Email { get; set; }
+
+        [NotNull]
         public string Password { get; set; }
-        public List<int> RegisteredEvents { get; set; }
 
-        // Constructor
-        public User()
+       
+        public void Login()
         {
-            RegisteredEvents = new List<int>();
+            Console.WriteLine($"{Name} has logged in.");
         }
-
+        public void EditProfile()
+        {
+            Console.WriteLine($"{Name} is editing their profile.");
+        }
+        
         // Method to register for an event
         public void RegisterForEvent(int eventId)
         {
-            if (!RegisteredEvents.Contains(eventId))
-            {
-                RegisteredEvents.Add(eventId);
-            }
+            Console.WriteLine($"{Name} has registered for Event {eventId}.");
+        }
+
+        public void CancelRegistrationForEvent(int eventId)
+        {
+            Console.WriteLine($"{Name} has cancelled registration for Event {eventId}.");
         }
     }
 }

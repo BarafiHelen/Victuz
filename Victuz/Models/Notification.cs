@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +9,35 @@ namespace Victuz.Models
 {
     public class Notification
     {
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string Message { get; set; }
-        public DateTime Timestamp { get; set; }
+
+        [Indexed, NotNull]
         public int UserId { get; set; }
+
+        [MaxLength(500), NotNull]
+        public string Message { get; set; }
+
+        [NotNull]
+        public DateTime ShippingDate { get; set; }
 
         public Notification(string message, int userId)
         {
             Message = message;
             UserId = userId;
-            Timestamp = DateTime.Now;
+            ShippingDate = DateTime.Now;
         }
 
         public void SendNotification()
         {
             Console.WriteLine($"Notification to User {UserId}: {Message}");
+        }
+        public static void SendNotification(List<Notification> notifications)
+        {
+            foreach (var notification in notifications)
+            {
+                notification.SendNotification();
+            }
         }
     }
 }
