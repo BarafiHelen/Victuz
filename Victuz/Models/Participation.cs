@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,14 @@ namespace Victuz.Models
 
         [NotNull]
         public DateTime ParticipationDate { get; set; }
+        public string Status { get; set; } = "Active";
 
         public Participation(int userId, int eventId)
         {
             UserId = userId;
             EventId = eventId;
             ParticipationDate = DateTime.Now;
+            Status = "Active";
         }
         // Methode om deelname te annuleren
         public void CancelParticipation()

@@ -22,8 +22,9 @@ namespace Victuz.Models
 
         [NotNull]
         public string Password { get; set; }
+        public List<int> RegisteredEventIds { get; set; } = new List<int>();
 
-       
+
         public void Login()
         {
             Console.WriteLine($"{Name} has logged in.");
@@ -36,12 +37,28 @@ namespace Victuz.Models
         // Method to register for an event
         public void RegisterForEvent(int eventId)
         {
-            Console.WriteLine($"{Name} has registered for Event {eventId}.");
+            if (!RegisteredEventIds.Contains(eventId))
+            {
+                RegisteredEventIds.Add(eventId);
+                Console.WriteLine($"{Name} has registered for Event {eventId}.");
+            }
+            else
+            {
+                Console.WriteLine($"{Name} is already registered for Event {eventId}.");
+            }
         }
 
         public void CancelRegistrationForEvent(int eventId)
         {
-            Console.WriteLine($"{Name} has cancelled registration for Event {eventId}.");
+            if (RegisteredEventIds.Contains(eventId))
+            {
+                RegisteredEventIds.Remove(eventId);
+                Console.WriteLine($"{Name} has cancelled registration for Event {eventId}.");
+            }
+            else
+            {
+                Console.WriteLine($"{Name} is not registered for Event {eventId}.");
+            }
         }
     }
 }

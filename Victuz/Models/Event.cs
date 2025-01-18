@@ -26,7 +26,8 @@ namespace Victuz.Models
         [NotNull]
         public int MaxParticipants { get; set; }
 
-        
+        public List<int> Participants { get; set; } = new List<int>();
+
 
         // Constructor
         public Event()
@@ -50,14 +51,28 @@ namespace Victuz.Models
             return MaxParticipants - participantCount;
         }
 
-        public void AddParticipant(int userId)
+        public bool AddParticipant(int userId)
         {
-            Console.WriteLine($"User {userId} added to event {Title}.");
+            if (Participants.Count < MaxParticipants && !Participants.Contains(userId))
+            {
+                Participants.Add(userId);
+                Console.WriteLine($"User {userId} added to event {Title}.");
+                return true;
+            }
+            Console.WriteLine($"Cannot add user {userId} to event {Title}.");
+            return false;
         }
 
-        public void RemoveParticipant(int userId)
+        public bool RemoveParticipant(int userId)
         {
-            Console.WriteLine($"User {userId} removed from event {Title}.");
+            if (Participants.Contains(userId))
+            {
+                Participants.Remove(userId);
+                Console.WriteLine($"User {userId} removed from event {Title}.");
+                return true;
+            }
+            Console.WriteLine($"User {userId} is not part of event {Title}.");
+            return false;
         }
     }
 }

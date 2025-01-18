@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Microsoft.Extensions.Logging;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,15 +20,15 @@ namespace Victuz.Models
         public string Code { get; set; }
         public DateTime ExpiryDate { get; set; }
 
-        public QRCode()
+        public QRCode(int eventId)
         {
-            Code = Guid.NewGuid().ToString();
-            ExpiryDate = DateTime.Now.AddDays(7); // QR-code verloopt na 7 dagen
+            EventId = eventId;
+            Generate();
         }
         public void Generate()
         {
             Code = Guid.NewGuid().ToString();
-            ExpiryDate = DateTime.Now.AddDays(7);   
+            ExpiryDate = DateTime.Now.AddDays(7);   // QR-code verloopt na 7 dagen 
             Console.WriteLine($"QR Code generated: {Code}, valid until{ExpiryDate}");
         }
 

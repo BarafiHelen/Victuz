@@ -32,12 +32,6 @@ namespace Victuz.Models
         {
             Console.WriteLine($"Notification to User {UserId}: {Message}");
         }
-        public static void SendNotification(List<Notification> notifications)
-        {
-            foreach (var notification in notifications)
-            {
-                notification.SendNotification();
-            }
-        }
+       
     }
 }
