@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Victuz.Views.ProfileView"
+             Title="Profile"
+             BackgroundColor="#000000">
+
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Profile Page"
+               FontSize="30"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="#FF0000" />
+
+        <Label Text="Name:"
+               FontSize="20"
+               TextColor="White" />
+        <Label Text="{Binding User.Name}"
+               FontSize="18"
+               TextColor="White" />
+
+        <Label Text="Email:"
+               FontSize="20"
+               TextColor="White" />
+        <Label Text="{Binding User.Email}"
+               FontSize="18"
+               TextColor="White" />
+
+        <Button Text="Edit Profile"
+                BackgroundColor="#FF0000"
+                TextColor="White" />
+    </StackLayout>
+</ContentPage>

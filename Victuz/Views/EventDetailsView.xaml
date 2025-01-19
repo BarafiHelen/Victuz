@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Victuz.Views.EventDetailsView"
+             Title="Event Details"
+             BackgroundColor="#000000">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="15">
+            <Label Text="Event Details"
+                   FontSize="30"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#FF0000" />
+
+            <Label Text="Event Title:"
+                   FontSize="20"
+                   TextColor="White" />
+            <Label Text="{Binding SelectedEvent.Title}"
+                   FontSize="18"
+                   TextColor="White" />
+
+            <Label Text="Location:"
+                   FontSize="20"
+                   TextColor="White" />
+            <Label Text="{Binding SelectedEvent.Location}"
+                   FontSize="18"
+                   TextColor="White" />
+
+            <Label Text="Date:"
+                   FontSize="20"
+                   TextColor="White" />
+            <Label Text="{Binding SelectedEvent.Date, StringFormat='{0:MMMM dd, yyyy}'}"
+                   FontSize="18"
+                   TextColor="White" />
+
+            <Label Text="Description:"
+                   FontSize="20"
+                   TextColor="White" />
+            <Label Text="{Binding SelectedEvent.Description}"
+                   FontSize="18"
+                   TextColor="White" />
+
+            <Button Text="Back"
+                    BackgroundColor="#FF0000"
+                    TextColor="White"
+                    Command="{Binding NavigateBackCommand}" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

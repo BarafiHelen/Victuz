@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Victuz.ViewModels"
+             x:Class="Victuz.Views.EventView"
+             Title="Events"
+             BackgroundColor="#000000">
+
+    <ContentPage.BindingContext>
+        <viewmodels:EventViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Events"
+               FontSize="30"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="#FF0000" />
+
+        <ListView ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedEvent}" BackgroundColor="#1C1C1C">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10" Orientation="Vertical" BackgroundColor="#1C1C1C">
+                            <Label Text="{Binding Title}" FontSize="20" TextColor="#FF0000" />
+                            <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="14" TextColor="White" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="Add Event"
+                Command="{Binding AddEventCommand}"
+                BackgroundColor="#FF0000"
+                TextColor="White" />
+    </StackLayout>
+</ContentPage>

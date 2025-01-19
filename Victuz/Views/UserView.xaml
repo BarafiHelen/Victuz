@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Victuz.ViewModels"
+             x:Class="Victuz.Views.UserView"
+             Title="Users"
+             BackgroundColor="#000000">
+
+    <ContentPage.BindingContext>
+        <viewmodels:UserViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Users"
+               FontSize="30"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="#FF0000" />
+
+        <ListView ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" BackgroundColor="#1C1C1C">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10" Orientation="Vertical" BackgroundColor="#1C1C1C">
+                            <Label Text="{Binding Name}" FontSize="20" TextColor="#FF0000" />
+                            <Label Text="{Binding Email}" FontSize="14" TextColor="White" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10">
+            <Button Text="Add User" Command="{Binding AddUserCommand}" BackgroundColor="#FF0000" TextColor="White" />
+            <Button Text="Delete User" Command="{Binding DeleteUserCommand}" IsEnabled="{Binding SelectedUser}" BackgroundColor="#FF0000" TextColor="White" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
