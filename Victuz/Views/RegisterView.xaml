@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Victuz.Views.RegisterView"
+             Title="Register"
+             BackgroundColor="White">
+    <VerticalStackLayout Spacing="20" Padding="30">
+        <Label Text="Create an Account" FontSize="24" HorizontalTextAlignment="Center" TextColor="Black"/>
+        <Entry Placeholder="Full Name" x:Name="NameEntry" TextColor="Black" BackgroundColor="White"/>
+        <Entry Placeholder="Email" x:Name="EmailEntry" TextColor="Black" BackgroundColor="White"/>
+        <Entry Placeholder="Password" x:Name="PasswordEntry" IsPassword="True" TextColor="Black" BackgroundColor="white"/>
+        <Entry Placeholder="Confirm Password" x:Name="ConfirmPasswordEntry" IsPassword="True" TextColor="Black" BackgroundColor="white"/>
+        <Button Text="Register" BackgroundColor="Red" TextColor="White" Clicked="OnRegisterClicked"/>
+    </VerticalStackLayout>
+</ContentPage>

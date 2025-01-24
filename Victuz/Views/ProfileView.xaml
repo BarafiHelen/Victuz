@@ -1,33 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Victuz.ViewModels"
              x:Class="Victuz.Views.ProfileView"
              Title="Profile"
-             BackgroundColor="#000000">
-
-    <StackLayout Padding="20" Spacing="15">
-        <Label Text="Profile Page"
-               FontSize="30"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               TextColor="#FF0000" />
-
-        <Label Text="Name:"
-               FontSize="20"
-               TextColor="White" />
-        <Label Text="{Binding User.Name}"
-               FontSize="18"
-               TextColor="White" />
-
-        <Label Text="Email:"
-               FontSize="20"
-               TextColor="White" />
-        <Label Text="{Binding User.Email}"
-               FontSize="18"
-               TextColor="White" />
-
-        <Button Text="Edit Profile"
-                BackgroundColor="#FF0000"
-                TextColor="White" />
-    </StackLayout>
+             BindingContext="{x:Static vm:ProfileViewModel.Instance}"
+             BackgroundColor="White">
+    <VerticalStackLayout Padding="20">
+        <Label Text="My Profile" FontSize="24" TextColor="Black"/>
+        <Entry Text="{Binding Name}" Placeholder="Full Name" TextColor="Black" BackgroundColor="LightGray"/>
+        <Entry Text="{Binding Email}" Placeholder="Email" TextColor="Black" BackgroundColor="LightGray" IsReadOnly="True"/>
+        <Entry Text="{Binding PhoneNumber}" Placeholder="Phone Number" TextColor="Black" BackgroundColor="LightGray"/>
+        <Button Text="Save Changes" BackgroundColor="Red" TextColor="White" Command="{Binding SaveCommand}"/>
+    </VerticalStackLayout>
 </ContentPage>

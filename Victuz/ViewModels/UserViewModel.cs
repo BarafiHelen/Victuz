@@ -1,72 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Victuz.Models;
+using Victuz.Services;
 
 namespace Victuz.ViewModels
 {
-    public class UserViewModel : INotifyPropertyChanged
+    public class UserViewModel : BaseViewModel
     {
         public ObservableCollection<User> Users { get; set; }
+        public User SelectedUser { get; set; }
+
         public ICommand AddUserCommand { get; }
         public ICommand DeleteUserCommand { get; }
-        private readonly DatabaseService _databaseService;
 
-        private User _selectedUser;
-        public User SelectedUser
-        {
-            get => _selectedUser;
-            set
-            {
-                _selectedUser = value;
-                OnPropertyChanged();
-            }
-
-        }
         public UserViewModel()
         {
-            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Victuz.db");
-
-            // DatabaseService wordt hier geïnitialiseerd met een specifiek pad
-            _databaseService = new DatabaseService(dbPath);
-            Users = new ObservableCollection<User>(_databaseService.GetAll<User>());
+            Users = new ObservableCollection<User>();
+            LoadUsers();
 
             AddUserCommand = new Command(AddUser);
             DeleteUserCommand = new Command(DeleteUser);
         }
 
-        private void AddUser()
+        private async void LoadUsers()
+        {
+            var users = await App.Database.GetItemsAsync<User>();
+            foreach (var user in users)
+            {
+                Users.Add(user);
+            }
+        }
+
+        private async void AddUser()
         {
             var newUser = new User
             {
                 Name = "New User",
-                PhoneNumber = "123456789",
-                Email = "newuser@example.com",
+                EmailAddress = "newuser@example.com",
+                PhoneNumber = "000-000-0000",
                 Password = "password123"
             };
 
-            _databaseService.Save(newUser);
+            await App.Database.SaveItemAsync(newUser);
             Users.Add(newUser);
         }
-        private void DeleteUser()
+
+        private async void DeleteUser()
         {
             if (SelectedUser != null)
             {
-                _databaseService.Delete(SelectedUser);
+                await App.Database.DeleteItemAsync(SelectedUser);
                 Users.Remove(SelectedUser);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -1,46 +1,51 @@
-﻿using System;
+﻿using MvvmHelpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Victuz.Models;
+using Victuz.Services;
 
 namespace Victuz.ViewModels
 {
-    public class EventViewModel : INotifyPropertyChanged
+    public class EventViewModel : BaseViewModel
     {
-        public ObservableCollection<Event> Events { get; set; }
-        public ICommand AddEventCommand { get; }
-        public ICommand DeleteEventCommand { get; }
-        private readonly DatabaseService _databaseService;
+        public ObservableCollection<Event> Events { get; set; } = new ObservableCollection<Event>();
+
+        public Command AddEventCommand { get; }
+        public Command DeleteEventCommand { get; }
 
         private Event _selectedEvent;
         public Event SelectedEvent
         {
             get => _selectedEvent;
-            set
-            {
-                _selectedEvent = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _selectedEvent, value);
         }
+
         public EventViewModel()
         {
-            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Victuz.db");
-
-            // DatabaseService wordt hier geïnitialiseerd met een specifiek pad
-            _databaseService = new DatabaseService(dbPath);
-            Events = new ObservableCollection<Event>(_databaseService.GetAll<Event>());
-
-            AddEventCommand = new Command(AddEvent);
-            DeleteEventCommand = new Command(DeleteEvent);
+            LoadEvents();
+            AddEventCommand = new Command(OnAddEvent);
+            DeleteEventCommand = new Command(OnDeleteEvent, CanDeleteEvent);
         }
 
-        private void AddEvent()
+        private async void LoadEvents()
+        {
+            try
+            {
+                var events = await App.Database.GetItemsAsync<Event>();
+                Events.Clear();
+                foreach (var evt in events)
+                {
+                    Events.Add(evt);
+                }
+            }
+            catch (Exception)
+            {
+                // Log de fout of toon een melding
+            }
+        }
+
+        private async void OnAddEvent()
         {
             var newEvent = new Event
             {
@@ -50,23 +55,22 @@ namespace Victuz.ViewModels
                 Date = DateTime.Now.AddDays(7)
             };
 
-            _databaseService.Save(newEvent);
+            await App.Database.SaveItemAsync(newEvent);
             Events.Add(newEvent);
         }
 
-        private void DeleteEvent()
+        private bool CanDeleteEvent()
+        {
+            return SelectedEvent != null;
+        }
+
+        private async void OnDeleteEvent()
         {
             if (SelectedEvent != null)
             {
-                _databaseService.Delete(SelectedEvent);
+                await App.Database.DeleteItemAsync(SelectedEvent);
                 Events.Remove(SelectedEvent);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

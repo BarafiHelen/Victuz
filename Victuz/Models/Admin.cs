@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Victuz.Models;
 
 namespace Victuz.Models
 {
@@ -17,12 +18,12 @@ namespace Victuz.Models
         public void UpdateEvent(Event existingEvent, string newTitle)
         {
             existingEvent.Title = newTitle;
-            Console.WriteLine($"Event {existingEvent.Id} updated by Admin {Name}");
+            Console.WriteLine($"Event {existingEvent.ID} updated by Admin {Name}");
         }
 
         public void DeleteEvent(Event eventToDelete)
         {
-            Console.WriteLine($"Event {eventToDelete.Id} deleted by Admin {Name}");
+            Console.WriteLine($"Event {eventToDelete.ID} deleted by Admin {Name}");
         }
     }
 }
