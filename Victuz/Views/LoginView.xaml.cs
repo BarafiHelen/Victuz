@@ -12,16 +12,15 @@ public partial class LoginView : ContentPage
     {
         InitializeComponent();
     }
+
     private async void OnLoginClicked(object sender, EventArgs e)
     {
-        // Controleer of de velden zijn ingevuld
         if (string.IsNullOrEmpty(EmailEntry.Text) || string.IsNullOrEmpty(PasswordEntry.Text))
         {
             await DisplayAlert("Error", "Please fill in all fields", "OK");
             return;
         }
 
-        // Zoek naar een gebruiker met overeenkomend e-mailadres en wachtwoord
         var user = (await App.Database.GetItemsAsync<User>())
             .FirstOrDefault(u => u.EmailAddress == EmailEntry.Text && u.Password == PasswordEntry.Text);
 
@@ -34,9 +33,31 @@ public partial class LoginView : ContentPage
             await DisplayAlert("Error", "Invalid email or password", "OK");
         }
     }
-    
+
     private async void OnRegisterClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new RegisterView());
+    }
+
+    private async void OnForgotPasswordClicked(object sender, EventArgs e)
+    {
+        string email = await DisplayPromptAsync("Forgot Password", "Enter your email:", "OK", "Cancel");
+
+        if (string.IsNullOrEmpty(email))
+        {
+            return;
+        }
+
+        var user = (await App.Database.GetItemsAsync<User>())
+            .FirstOrDefault(u => u.EmailAddress == email);
+
+        if (user != null)
+        {
+            await DisplayAlert("Password Recovery", $"Your password is: {user.Password}", "OK");
+        }
+        else
+        {
+            await DisplayAlert("Error", "No account found with this email.", "OK");
+        }
     }
 }

@@ -6,12 +6,26 @@
              BackgroundColor="White">
     <VerticalStackLayout Spacing="20" Padding="30">
         <Label Text="Welcome By Victuz!" FontSize="24" HorizontalTextAlignment="Center" TextColor="Black"/>
-        <Entry Placeholder="Email" x:Name="EmailEntry" TextColor="Black" BackgroundColor="white"/>
+        <Entry Placeholder="Email" x:Name="EmailEntry" TextColor="Black" BackgroundColor="White"/>
         <Entry Placeholder="Password" x:Name="PasswordEntry" IsPassword="True" TextColor="Black" BackgroundColor="White"/>
+
         <Button Text="Login" BackgroundColor="Red" TextColor="White" Clicked="OnLoginClicked"/>
-        <HorizontalStackLayout HorizontalOptions="Center">
-            <Label Text="Don't have an account?" TextColor="Black"/>
-            <Button Text="Sign Up" TextColor="Red" Clicked="OnRegisterClicked" BackgroundColor="Transparent"/>
-        </HorizontalStackLayout>
+
+        <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Don't have an account? " TextColor="Black"/>
+                        <Span Text="Sign Up" TextColor="Red">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnRegisterClicked"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Button Text="Forgot password?" FontAttributes="Italic" TextColor="Black" BackgroundColor="Transparent" Clicked="OnForgotPasswordClicked" Padding="0"/>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
