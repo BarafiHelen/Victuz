@@ -1,30 +1,43 @@
+using System.Collections.ObjectModel;
 using Victuz.Models;
 
 namespace Victuz.Views;
 
 public partial class EventView : ContentPage
 {
-    private List<Event> _allEvents;
+    public ObservableCollection<Event> Events { get; set; } = new ObservableCollection<Event>();
+    //private List<Event> _allEvents = new List<Event>();
+
 
     public EventView()
     {
         InitializeComponent();
-        LoadEvents();
+        BindingContext = this;
     }
 
-    private async void LoadEvents()
+    protected override async void OnAppearing()
     {
-        _allEvents = (await App.Database.GetItemsAsync<Event>())
-                     .Where(ev => ev.Date > DateTime.Now)
-                     .ToList();
-        EventListView.ItemsSource = _allEvents;
+        base.OnAppearing();
+        await LoadEvents();  // Zorg ervoor dat de lijst altijd updatet bij terugkeer
+    }
+
+    private async Task LoadEvents()
+    {
+        var events = await App.Database.GetItemsAsync<Event>();
+        Events.Clear();
+        foreach (var ev in events.Where(e => e.Date > DateTime.Now))
+        {
+            Events.Add(ev);
+        }
+
+        EventListView.ItemsSource = Events; 
     }
 
     private void OnSearchBarTextChanged(object sender, TextChangedEventArgs e)
     {
         var filteredEvents = string.IsNullOrWhiteSpace(e.NewTextValue)
-            ? _allEvents
-            : _allEvents.Where(ev => ev.Title.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+            ? Events
+            : new ObservableCollection<Event>(Events.Where(ev => ev.Title.ToLower().Contains(e.NewTextValue.ToLower())));
 
         EventListView.ItemsSource = filteredEvents;
     }
@@ -42,8 +55,8 @@ public partial class EventView : ContentPage
             if (confirm)
             {
                 await App.Database.DeleteItemAsync(selectedEvent);
-                _allEvents.Remove(selectedEvent);
-                EventListView.ItemsSource = new List<Event>(_allEvents);
+                Events.Remove(selectedEvent);
+                EventListView.ItemsSource = new ObservableCollection<Event>(Events); // Zorg voor directe update
             }
         }
         else
@@ -75,7 +88,7 @@ public partial class EventView : ContentPage
         selectedEvent.Date = newDate;
 
         await App.Database.SaveItemAsync(selectedEvent);
-        EventListView.ItemsSource = new List<Event>(_allEvents); // Refresh list
+        await LoadEvents(); // Update de lijst na het bewerken
     }
 
     private async void OnEventSelected(object sender, SelectedItemChangedEventArgs e)

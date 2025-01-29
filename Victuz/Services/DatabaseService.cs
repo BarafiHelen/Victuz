@@ -12,37 +12,22 @@ namespace Victuz.Services
         public DatabaseService(string dbPath)
         {
             _database = new SQLiteAsyncConnection(dbPath);
-            _database.CreateTableAsync<User>().Wait();
             _database.CreateTableAsync<Event>().Wait();
-            _database.CreateTableAsync<Participation>().Wait();
-            _database.CreateTableAsync<QRCode>().Wait();
-            _database.CreateTableAsync<Notification>().Wait();
         }
 
-        // Algemene methoden
-        
-        public Task<List<T>> GetIAll<T>() where T : new()
+        public async Task<List<T>> GetItemsAsync<T>() where T : new()
         {
-            return _database.Table<T>().ToListAsync();
+            return await _database.Table<T>().ToListAsync();
         }
 
-        public Task<int> SaveItemAsync<T>(T item)
+        public async Task<int> SaveItemAsync<T>(T item) where T : new()
         {
-            return _database.InsertOrReplaceAsync(item);
+            return await _database.InsertOrReplaceAsync(item);
         }
 
-        public Task<int> DeleteItemAsync<T>(T item)
+        public async Task<int> DeleteItemAsync<T>(T item) where T : new()
         {
-            return _database.DeleteAsync(item);
-        }
-        public Task<List<T>> QueryItemsAsync<T>(string query, params object[] args) where T : new()
-        {
-            return _database.QueryAsync<T>(query, args);
-        }
-        
-        public Task<List<T>> GetItemsAsync<T>() where T : new()
-        {
-            return _database.Table<T>().ToListAsync();
+            return await _database.DeleteAsync(item);
         }
     }
 }

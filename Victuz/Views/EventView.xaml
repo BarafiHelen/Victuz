@@ -2,39 +2,55 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Victuz.Views.EventView"
-             Title="Events">
+             Title="Events"
+             BackgroundColor="#F8F8F8">
 
+    <Grid RowDefinitions="Auto, Auto, *, Auto" Padding="15">
 
-    <VerticalStackLayout Padding="0">
+        <!-- Titel -->
+        <Label Text="Upcoming Events"
+               FontSize="24"
+               FontAttributes="Bold"
+               TextColor="Black"
+               HorizontalOptions="Center"
+               Grid.Row="0" Margin="0,0,0,10"/>
 
         <!-- Zoekbalk -->
         <SearchBar Placeholder="Search Events..."
                    x:Name="SearchBar"
                    TextChanged="OnSearchBarTextChanged"
-                   BackgroundColor="White"/>
+                   BackgroundColor="White"
+                   HeightRequest="45"
+                   Grid.Row="1"
+                   Margin="0,0,0,10"/>
 
-        <!-- Lijst met evenementen -->
-        <ListView x:Name="EventListView"
-                  SelectionMode="Single"
-                  ItemSelected="OnEventSelected">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Orientation="Vertical" Padding="10">
-                            <Label Text="{Binding Title}" FontSize="18" TextColor="Black"/>
-                            <Label Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}" FontSize="14" TextColor="Gray"/>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <!-- Lijst met events (neemt de meeste ruimte in) -->
+        <Frame BackgroundColor="White" CornerRadius="10" Padding="5" HasShadow="True" Grid.Row="2">
+            <ListView x:Name="EventListView"
+                      SelectionMode="Single"
+                      ItemSelected="OnEventSelected"
+                      BackgroundColor="Transparent"
+                      HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}" FontSize="14" TextColor="Gray"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
 
-        <!-- Knoppen onderaan -->
-        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-            <Button Text="Add" BackgroundColor="Red" TextColor="White" Clicked="OnAddEventClicked"/>
-            <Button Text="Remove" BackgroundColor="Red" TextColor="White" Clicked="OnRemoveEventClicked"/>
-            <Button Text="Edit" BackgroundColor="Red" TextColor="White" Clicked="OnEditEventClicked"/>
-        </HorizontalStackLayout>
+        <!-- Knoppen (blijven altijd onderaan) -->
+        <VerticalStackLayout Spacing="10" Padding="10" Grid.Row="3">
+            <Button Text="➕ Add Event" BackgroundColor="Red" TextColor="White" Clicked="OnAddEventClicked" HeightRequest="50" CornerRadius="10"/>
+            <Button Text="🗑️ Remove Event" BackgroundColor="Red" TextColor="White" Clicked="OnRemoveEventClicked" HeightRequest="50" CornerRadius="10"/>
+            <Button Text="✏️ Edit Event" BackgroundColor="Red" TextColor="White" Clicked="OnEditEventClicked" HeightRequest="50" CornerRadius="10"/>
+        </VerticalStackLayout>
 
-    </VerticalStackLayout>
+    </Grid>
+
 </ContentPage>
