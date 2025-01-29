@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Microsoft.VisualBasic;
+using SQLite;
 
 namespace Victuz.Models
 {
@@ -8,9 +9,12 @@ namespace Victuz.Models
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
         public int EventID { get; set; }
+        public int UserID { get; set; }
+
         [MaxLength(50)]
         public string Code { get; set; }
-
+        public string QRCodeContent { get; set; } // De inhoud van de QR-code
+        public byte[] QRCodeImage { get; set; }   // De afbeelding van de QR-code
         // QR-code genereren
         public string Generate()
         {

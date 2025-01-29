@@ -8,6 +8,7 @@ public partial class EventView : ContentPage
     public ObservableCollection<Event> Events { get; set; } = new ObservableCollection<Event>();
     //private List<Event> _allEvents = new List<Event>();
 
+    public ListView EventListViewPublic => EventListView;
 
     public EventView()
     {
@@ -18,19 +19,32 @@ public partial class EventView : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await LoadEvents();  // Zorg ervoor dat de lijst altijd updatet bij terugkeer
+        await LoadEvents(); 
     }
 
     private async Task LoadEvents()
     {
-        var events = await App.Database.GetItemsAsync<Event>();
-        Events.Clear();
-        foreach (var ev in events.Where(e => e.Date > DateTime.Now))
+        try
         {
-            Events.Add(ev);
-        }
+            var events = await App.Database.GetItemsAsync<Event>();
 
-        EventListView.ItemsSource = Events; 
+            if (events != null)
+            {
+                Events.Clear();
+
+                foreach (var ev in events.Where(e => e.Date > DateTime.Now))
+                {
+                    Events.Add(ev);
+                }
+
+                EventListView.ItemsSource = null; // Forceer UI-verversing
+                EventListView.ItemsSource = Events;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading events: {ex.Message}");
+        }
     }
 
     private void OnSearchBarTextChanged(object sender, TextChangedEventArgs e)

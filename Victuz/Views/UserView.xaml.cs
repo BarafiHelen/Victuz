@@ -4,9 +4,12 @@ namespace Victuz.Views;
 
 public partial class UserView : ContentPage
 {
+    private UserViewModel _viewModel;
     public UserView()
     {
         InitializeComponent();
-        BindingContext = new UserViewModel();
+        _viewModel = new UserViewModel();
+        BindingContext = _viewModel;
     }
+
 }

@@ -13,6 +13,9 @@ namespace Victuz.Services
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Event>().Wait();
+            _database.CreateTableAsync<User>().Wait();
+            _database.CreateTableAsync<Participation>().Wait();
+            _database.CreateTableAsync<QRCode>().Wait();
         }
 
         public async Task<List<T>> GetItemsAsync<T>() where T : new()
@@ -22,7 +25,7 @@ namespace Victuz.Services
 
         public async Task<int> SaveItemAsync<T>(T item) where T : new()
         {
-            return await _database.InsertOrReplaceAsync(item);
+            return await _database.InsertAsync(item);
         }
 
         public async Task<int> DeleteItemAsync<T>(T item) where T : new()

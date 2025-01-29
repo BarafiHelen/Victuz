@@ -9,5 +9,18 @@
         <Label Text="{Binding Description}" FontSize="14" TextColor="Gray" />
         <Label Text="{Binding Location}" FontSize="14" TextColor="Black" />
         <Label Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}" FontSize="14" TextColor="Black" />
+        <Button Text="Join Event"
+                BackgroundColor="Green"
+                TextColor="White"
+                Clicked="OnJoinEventClicked"
+                HorizontalOptions="Center"
+                VerticalOptions="EndAndExpand" />
+        <Button Text="Back"
+                BackgroundColor="Red"
+                TextColor="White"
+                Clicked="OnBackClicked"
+                HorizontalOptions="Center"
+                VerticalOptions="EndAndExpand" />
+
     </VerticalStackLayout>
 </ContentPage>

@@ -26,6 +26,7 @@ public partial class LoginView : ContentPage
 
         if (user != null)
         {
+            await SecureStorage.SetAsync("LoggedInUserID", user.ID.ToString());
             await Navigation.PushAsync(new EventView());
         }
         else

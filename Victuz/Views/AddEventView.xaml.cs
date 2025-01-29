@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Victuz.Models;
 
 namespace Victuz.Views;
@@ -39,6 +40,16 @@ public partial class AddEventView : ContentPage
         await App.Database.SaveItemAsync(newEvent);
         await DisplayAlert("Success", "Event added successfully!", "OK");
 
+        // Events.Add(newEvent);
+        // EventListView.ItemsSource = null; // Forceer UI-verversing
+        //  EventListView.ItemsSource = Events;
+
+        if (Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault() is EventView eventView)
+        {
+            eventView.Events.Add(newEvent);
+            eventView.EventListViewPublic.ItemsSource = null; // Forceer UI-verversing
+            eventView.EventListViewPublic.ItemsSource = eventView.Events;
+        }
         await Navigation.PopAsync(); // Keer terug en laat EventView de lijst updaten
     }
 }

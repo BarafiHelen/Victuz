@@ -10,5 +10,6 @@ namespace Victuz.Models
         public int UserID { get; set; }
         public int EventID { get; set; }
         public DateTime RegisterDate { get; set; }
+        public DateTime JoinDate { get; internal set; }
     }
 }
