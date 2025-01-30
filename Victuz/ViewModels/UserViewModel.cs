@@ -4,113 +4,70 @@ using System.Linq;
 using System.Windows.Input;
 using Victuz.Models;
 using Victuz.Services;
-
-namespace Victuz.ViewModels;
-
-public class UserViewModel : BaseViewModel
+namespace Victuz.ViewModels
 {
-    public ObservableCollection<User> Users { get; private set; } = new ObservableCollection<User>();
-    public ObservableCollection<User> FilteredUsers { get; private set; } = new ObservableCollection<User>();
-
-    private string _searchText;
-    public string SearchText
+    public class UserViewModel : BaseViewModel
     {
-        get => _searchText;
-        set
+        public ObservableCollection<User> Users { get; set; }
+        public User SelectedUser { get; set; }
+        public string SearchText { get; set; }
+
+        public ICommand AddUserCommand { get; }
+        public ICommand DeleteUserCommand { get; }
+
+        public UserViewModel()
         {
-            if (SetProperty(ref _searchText, value))
+            Users = new ObservableCollection<User>();
+            AddUserCommand = new Command(async () => await AddUserAsync());
+            DeleteUserCommand = new Command(async () => await DeleteUserAsync(), () => SelectedUser != null);
+
+            LoadUsers();
+        }
+
+        private async void LoadUsers()
+        {
+            // Haal alle gebruikers op uit de database
+            var userList = await App.Database.GetItemsAsync<User>();
+            Users.Clear();
+
+            // Voeg elke gebruiker handmatig toe aan de ObservableCollection
+            for (int i = 0; i < userList.Count; i++)
             {
-                FilterUsers();
+                Users.Add(userList[i]);
             }
         }
-    }
 
-    private User _selectedUser;
-    public User SelectedUser
-    {
-        get => _selectedUser;
-        set
+        private async Task AddUserAsync()
         {
-            if (SetProperty(ref _selectedUser, value))
+            // Maak een nieuwe gebruiker aan
+            var newUser = new User
             {
-                IsDeleteEnabled = value != null;
-            }
+                Name = "New User",
+                EmailAddress = "newuser@example.com",
+                PhoneNumber = "000-000-0000",
+                Password = "password123"
+            };
+
+            // Sla de gebruiker op in de database
+            await App.Database.SaveItemAsync(newUser);
+
+            // Voeg de nieuwe gebruiker toe aan de ObservableCollection
+            Users.Add(newUser);
         }
-    }
 
-    private bool _isDeleteEnabled;
-    public bool IsDeleteEnabled
-    {
-        get => _isDeleteEnabled;
-        set => SetProperty(ref _isDeleteEnabled, value);
-    }
-
-    public ICommand AddUserCommand { get; }
-    public ICommand DeleteUserCommand { get; }
-
-    public UserViewModel()
-    {
-        LoadUsers();
-
-        AddUserCommand = new Command(AddUser);
-        DeleteUserCommand = new Command(DeleteUser);
-    }
-
-    private async void LoadUsers()
-    {
-        var users = await App.Database.GetItemsAsync<User>();
-        Users.Clear();
-        foreach (var user in users)
+        private async Task DeleteUserAsync()
         {
-            Users.Add(user);
-        }
-        FilterUsers();
-    }
-
-    private void FilterUsers()
-    {
-        if (string.IsNullOrWhiteSpace(SearchText))
-        {
-            FilteredUsers.Clear();
-            foreach (var user in Users)
+            if (SelectedUser != null)
             {
-                FilteredUsers.Add(user);
+                // Verwijder de geselecteerde gebruiker uit de database
+                await App.Database.DeleteItemAsync(SelectedUser);
+
+                // Verwijder de gebruiker uit de ObservableCollection
+                Users.Remove(SelectedUser);
+
+                // Wis de selectie
+                SelectedUser = null;
             }
-        }
-        else
-        {
-            var filtered = Users.Where(u => u.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                                            u.EmailAddress.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
-            FilteredUsers.Clear();
-            foreach (var user in filtered)
-            {
-                FilteredUsers.Add(user);
-            }
-        }
-    }
-
-    private async void AddUser()
-    {
-        var newUser = new User
-        {
-            Name = "New User",
-            EmailAddress = "newuser@example.com",
-            PhoneNumber = "000-000-0000",
-            Password = "password123"
-        };
-
-        await App.Database.SaveItemAsync(newUser);
-        Users.Add(newUser);
-        FilterUsers();
-    }
-
-    private async void DeleteUser()
-    {
-        if (SelectedUser != null)
-        {
-            await App.Database.DeleteItemAsync(SelectedUser);
-            Users.Remove(SelectedUser);
-            FilterUsers();
         }
     }
 }

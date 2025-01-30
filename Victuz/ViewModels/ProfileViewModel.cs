@@ -34,9 +34,9 @@ public class ProfileViewModel : BaseViewModel
     private ProfileViewModel()
     {
         // Simuleer ingelogde gebruiker
-        Name = "John Doe";
-        Email = "johndoe@example.com";
-        PhoneNumber = "123-456-7890";
+        Name = "helen barafi";
+        Email = "helen@example.com";
+        PhoneNumber = "123";
 
         SaveCommand = new Command(SaveProfile);
     }
