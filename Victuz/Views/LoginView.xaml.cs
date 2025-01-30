@@ -1,13 +1,11 @@
-using Microsoft.Win32;
-using System.Security.Cryptography;
-using System.Text;
-using Victuz.Models;
-using Victuz.Views;
+﻿using Victuz.Models;
 
 namespace Victuz.Views;
 
 public partial class LoginView : ContentPage
 {
+    private bool _isPasswordVisible = false; // Houdt bij of het wachtwoord zichtbaar is
+
     public LoginView()
     {
         InitializeComponent();
@@ -27,7 +25,7 @@ public partial class LoginView : ContentPage
         if (user != null)
         {
             await SecureStorage.SetAsync("LoggedInUserID", user.ID.ToString());
-            await Navigation.PushAsync(new EventView());
+            await Navigation.PushAsync(new HomeView());
         }
         else
         {
@@ -60,5 +58,14 @@ public partial class LoginView : ContentPage
         {
             await DisplayAlert("Error", "No account found with this email.", "OK");
         }
+    }
+
+    private void OnTogglePasswordClicked(object sender, EventArgs e)
+    {
+        _isPasswordVisible = !_isPasswordVisible;
+        PasswordEntry.IsPassword = !_isPasswordVisible;
+
+        // Oog-icoon updaten
+        TogglePasswordButton.Text = _isPasswordVisible ? "🙈" : "👁";
     }
 }

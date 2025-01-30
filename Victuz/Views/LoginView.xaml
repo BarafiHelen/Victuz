@@ -4,11 +4,26 @@
              x:Class="Victuz.Views.LoginView"
              Title="Login"
              BackgroundColor="White">
-    
+
     <VerticalStackLayout Spacing="20" Padding="30">
         <Label Text="Welcome By Victuz!" FontSize="24" HorizontalTextAlignment="Center" TextColor="Black"/>
         <Entry Placeholder="Email" x:Name="EmailEntry" TextColor="Black" BackgroundColor="White"/>
-        <Entry Placeholder="Password" x:Name="PasswordEntry" IsPassword="True" TextColor="Black" BackgroundColor="White"/>
+
+        <!-- Wachtwoord invoer + Oog-icoon knop (breder veld) -->
+        <Grid ColumnDefinitions="*, Auto">
+            <Entry Placeholder="Password" 
+                   x:Name="PasswordEntry" 
+                   IsPassword="True" 
+                   TextColor="Black" 
+                   BackgroundColor="White"
+                   Margin="0,0,10,0"/>
+            <!-- Extra marge aan de rechterkant -->
+            <Button x:Name="TogglePasswordButton"
+                    Text="👁"
+                    BackgroundColor="Transparent"
+                    Clicked="OnTogglePasswordClicked"
+                    Grid.Column="1"/>
+        </Grid>
 
         <Button Text="Login" BackgroundColor="Red" TextColor="White" Clicked="OnLoginClicked"/>
 

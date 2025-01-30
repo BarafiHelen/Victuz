@@ -1,0 +1,21 @@
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:views="clr-namespace:Victuz.Views"
+            x:Class="Victuz.Views.HomeView">
+
+    <!-- Startpagina met introductie -->
+    <ContentPage Title="Home">
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Welkom bij de app!" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
+            <Label Text="Hier kun je navigeren naar verschillende functies van de app via het menu hieronder." FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+    </ContentPage>
+
+    <!-- Andere pagina's in het menu -->
+    <views:EventView Title="Events" IconImageSource="event_icon.png" />
+    <views:ProfileView Title="Profiel" IconImageSource="profile_icon.png" />
+    <views:QRScannerView Title="QR Scanner" IconImageSource="qr_icon.png" />
+    <views:ReviewView Title="Reviews" IconImageSource="review_icon.png" />
+    <views:UserView Title="Gebruikers" IconImageSource="user_icon.png" />
+
+</TabbedPage>
