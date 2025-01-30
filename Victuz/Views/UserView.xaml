@@ -4,35 +4,53 @@
              xmlns:viewmodels="clr-namespace:Victuz.ViewModels"
              x:Class="Victuz.Views.UserView"
              Title="Users"
-             BackgroundColor="#000000">
+             BackgroundColor="white">
 
     <ContentPage.BindingContext>
         <viewmodels:UserViewModel />
     </ContentPage.BindingContext>
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <!-- Titel -->
+        <Label Text="Gebruikers" FontSize="24" TextColor="Red" FontAttributes="Bold" HorizontalOptions="Center" />
 
-    <StackLayout Padding="20" Spacing="15">
-        <Label Text="Users"
-               FontSize="30"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               TextColor="#FF0000" />
+        <!-- Zoekbalk -->
+        <SearchBar Placeholder="Zoek gebruikers..."
+                   Text="{Binding SearchText}"
+                   TextChanged="OnSearchTextChanged"
+                   BackgroundColor="#F0F0F0"
+                   TextColor="Black" />
 
-        <ListView ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" BackgroundColor="#1C1C1C">
+        <!-- Gebruikerslijst -->
+        <ListView x:Name="UserListView"
+                  ItemsSource="{Binding FilteredUsers}"
+                  SelectedItem="{Binding SelectedUser}"
+                  BackgroundColor="White"
+                  SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="10" Orientation="Vertical" BackgroundColor="#1C1C1C">
-                            <Label Text="{Binding Name}" FontSize="20" TextColor="#FF0000" />
-                            <Label Text="{Binding Email}" FontSize="14" TextColor="White" />
+                        <StackLayout Orientation="Vertical" Padding="10">
+                            <Label Text="{Binding Name}" FontSize="18" TextColor="Black" />
+                            <Label Text="{Binding EmailAddress}" FontSize="14" TextColor="Gray" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="10">
-            <Button Text="Add User" Command="{Binding AddUserCommand}" BackgroundColor="#FF0000" TextColor="White" />
-            <Button Text="Delete User" Command="{Binding DeleteUserCommand}" IsEnabled="{Binding SelectedUser}" BackgroundColor="#FF0000" TextColor="White" />
+        <!-- Knoppen -->
+        <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="Center">
+            <Button Text="Add User"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    Command="{Binding AddUserCommand}"
+                    WidthRequest="100" />
+            <Button Text="Delete User"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    Command="{Binding DeleteUserCommand}"
+                    IsEnabled="{Binding IsDeleteEnabled}"
+                    WidthRequest="100" />
         </StackLayout>
-    </StackLayout>
+    </VerticalStackLayout>
 </ContentPage>

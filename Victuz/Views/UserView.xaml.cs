@@ -11,5 +11,7 @@ public partial class UserView : ContentPage
         _viewModel = new UserViewModel();
         BindingContext = _viewModel;
     }
-
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+    }
 }

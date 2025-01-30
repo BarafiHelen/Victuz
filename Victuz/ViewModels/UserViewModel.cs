@@ -1,67 +1,116 @@
 ﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Victuz.Models;
 using Victuz.Services;
-using Victuz.Views;
 
-namespace Victuz.ViewModels
+namespace Victuz.ViewModels;
+
+public class UserViewModel : BaseViewModel
 {
-    public class UserViewModel : BaseViewModel
+    public ObservableCollection<User> Users { get; private set; } = new ObservableCollection<User>();
+    public ObservableCollection<User> FilteredUsers { get; private set; } = new ObservableCollection<User>();
+
+    private string _searchText;
+    public string SearchText
     {
-        private readonly DatabaseService _databaseService;
-
-        public ObservableCollection<User> Users { get; set; }
-        public User SelectedUser { get; set; }
-
-        public ICommand AddUserCommand { get; }
-        public ICommand DeleteUserCommand { get; }
-        public ICommand SelectUserCommand { get; }
-
-        public UserViewModel()
+        get => _searchText;
+        set
         {
-            _databaseService = App.Database;
-            Users = new ObservableCollection<User>();
-            LoadUsers();
-
-            AddUserCommand = new Command(AddUser);
-            DeleteUserCommand = new Command(DeleteUser);
-
-        }
-
-        private async Task LoadUsers()
-        {
-            Users.Clear();
-            var users = await App.Database.GetItemsAsync<User>();
-            foreach (var user in users)
+            if (SetProperty(ref _searchText, value))
             {
-                Users.Add(user);
+                FilterUsers();
             }
         }
+    }
 
-        private async void AddUser()
+    private User _selectedUser;
+    public User SelectedUser
+    {
+        get => _selectedUser;
+        set
         {
-            var newUser = new User
+            if (SetProperty(ref _selectedUser, value))
             {
-                Name = "New User",
-                EmailAddress = "newuser@example.com",
-                PhoneNumber = "000-000-0000",
-                Password = "password123"
-            };
-
-            await App.Database.SaveItemAsync(newUser);
-            Users.Add(newUser);
-        }
-
-        private async void DeleteUser()
-        {
-            if (SelectedUser != null)
-            {
-                await App.Database.DeleteItemAsync(SelectedUser);
-                Users.Remove(SelectedUser);
-                SelectedUser = null;
+                IsDeleteEnabled = value != null;
             }
         }
-       
+    }
+
+    private bool _isDeleteEnabled;
+    public bool IsDeleteEnabled
+    {
+        get => _isDeleteEnabled;
+        set => SetProperty(ref _isDeleteEnabled, value);
+    }
+
+    public ICommand AddUserCommand { get; }
+    public ICommand DeleteUserCommand { get; }
+
+    public UserViewModel()
+    {
+        LoadUsers();
+
+        AddUserCommand = new Command(AddUser);
+        DeleteUserCommand = new Command(DeleteUser);
+    }
+
+    private async void LoadUsers()
+    {
+        var users = await App.Database.GetItemsAsync<User>();
+        Users.Clear();
+        foreach (var user in users)
+        {
+            Users.Add(user);
+        }
+        FilterUsers();
+    }
+
+    private void FilterUsers()
+    {
+        if (string.IsNullOrWhiteSpace(SearchText))
+        {
+            FilteredUsers.Clear();
+            foreach (var user in Users)
+            {
+                FilteredUsers.Add(user);
+            }
+        }
+        else
+        {
+            var filtered = Users.Where(u => u.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                                            u.EmailAddress.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+            FilteredUsers.Clear();
+            foreach (var user in filtered)
+            {
+                FilteredUsers.Add(user);
+            }
+        }
+    }
+
+    private async void AddUser()
+    {
+        var newUser = new User
+        {
+            Name = "New User",
+            EmailAddress = "newuser@example.com",
+            PhoneNumber = "000-000-0000",
+            Password = "password123"
+        };
+
+        await App.Database.SaveItemAsync(newUser);
+        Users.Add(newUser);
+        FilterUsers();
+    }
+
+    private async void DeleteUser()
+    {
+        if (SelectedUser != null)
+        {
+            await App.Database.DeleteItemAsync(SelectedUser);
+            Users.Remove(SelectedUser);
+            FilterUsers();
+        }
     }
 }

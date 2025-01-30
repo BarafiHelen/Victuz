@@ -6,11 +6,32 @@
              Title="Profile"
              BindingContext="{x:Static vm:ProfileViewModel.Instance}"
              BackgroundColor="White">
-    <VerticalStackLayout Padding="20">
-        <Label Text="My Profile" FontSize="24" TextColor="Black"/>
-        <Entry Text="{Binding Name}" Placeholder="Full Name" TextColor="Black" BackgroundColor="LightGray"/>
-        <Entry Text="{Binding Email}" Placeholder="Email" TextColor="Black" BackgroundColor="LightGray" IsReadOnly="True"/>
-        <Entry Text="{Binding PhoneNumber}" Placeholder="Phone Number" TextColor="Black" BackgroundColor="LightGray"/>
-        <Button Text="Save Changes" BackgroundColor="Red" TextColor="White" Command="{Binding SaveCommand}"/>
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <!-- Titel -->
+            <Label Text="Mijn Profiel" FontSize="28" FontAttributes="Bold" TextColor="#FF0000" HorizontalOptions="Center"/>
+
+            <!-- Gebruikersgegevens -->
+            <Entry Text="{Binding Name}" Placeholder="Volledige naam" TextColor="#333333" BackgroundColor="#F0F0F0" />
+            <Entry Text="{Binding Email}" Placeholder="E-mailadres" TextColor="#333333" BackgroundColor="#F0F0F0" IsReadOnly="True" />
+            <Entry Text="{Binding PhoneNumber}" Placeholder="Telefoonnummer" TextColor="#333333" BackgroundColor="#F0F0F0" />
+
+            <!-- Opslaan knop -->
+            <Button Text="Wijzigingen opslaan"
+                    BackgroundColor="#FF0000"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Command="{Binding SaveCommand}" />
+
+            <!-- Back knop -->
+            <Button Text="Terug"
+                    BackgroundColor="#CCCCCC"
+                    TextColor="#333333"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Clicked="OnBackClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

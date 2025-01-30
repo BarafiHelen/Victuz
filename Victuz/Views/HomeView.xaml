@@ -1,13 +1,28 @@
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:views="clr-namespace:Victuz.Views"
-            x:Class="Victuz.Views.HomeView">
+            x:Class="Victuz.Views.HomeView"
+            BackgroundColor="#FFFFFF"
+            BarBackgroundColor="#FF0000"
+            BarTextColor="White">
 
     <!-- Startpagina met introductie -->
-    <ContentPage Title="Home">
+    <ContentPage Title="Home" IconImageSource="home_icon.png">
         <VerticalStackLayout Padding="20" Spacing="15">
-            <Label Text="Welkom bij de app!" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
-            <Label Text="Hier kun je navigeren naar verschillende functies van de app via het menu hieronder." FontSize="16" TextColor="Gray" HorizontalOptions="Center"/>
+            <Label Text="Welkom bij Victuz!"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#FF0000" />
+            <Label Text="Navigeer naar verschillende functies van de app via het menu hieronder."
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       TextColor="#333333" />
+            
+            <Image Source="home_graphic.png"
+                       Aspect="AspectFit"
+                       HeightRequest="200"
+                       HorizontalOptions="Center" />
         </VerticalStackLayout>
     </ContentPage>
 
