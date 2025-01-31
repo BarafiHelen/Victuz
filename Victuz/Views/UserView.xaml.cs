@@ -4,14 +4,17 @@ namespace Victuz.Views;
 
 public partial class UserView : ContentPage
 {
-    private UserViewModel _viewModel;
     public UserView()
     {
         InitializeComponent();
-        _viewModel = new UserViewModel();
-        BindingContext = _viewModel;
+        BindingContext = new UserViewModel();
     }
+
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
+        if (BindingContext is UserViewModel viewModel)
+        {
+            viewModel.SearchText = e.NewTextValue;
+        }
     }
 }
