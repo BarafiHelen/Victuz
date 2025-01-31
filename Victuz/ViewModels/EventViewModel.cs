@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Victuz.Models;
 using Victuz.Services;
+using System.Threading.Tasks;
 
 namespace Victuz.ViewModels
 {
@@ -13,6 +14,9 @@ namespace Victuz.ViewModels
 
         public Command AddEventCommand { get; }
         public Command DeleteEventCommand { get; }
+        public Command LoadPublicEventsCommand { get; }
+
+        private readonly OpenEventApiService _eventApiService = new OpenEventApiService();
 
         private Event _selectedEvent;
         public Event SelectedEvent
@@ -26,6 +30,7 @@ namespace Victuz.ViewModels
             LoadEvents();
             AddEventCommand = new Command(OnAddEvent);
             DeleteEventCommand = new Command(OnDeleteEvent, CanDeleteEvent);
+            LoadPublicEventsCommand = new Command(async () => await LoadPublicEvents());
         }
 
         private async void LoadEvents()
@@ -70,6 +75,15 @@ namespace Victuz.ViewModels
             {
                 await App.Database.DeleteItemAsync(SelectedEvent);
                 Events.Remove(SelectedEvent);
+            }
+        }
+
+        private async Task LoadPublicEvents()
+        {
+            var publicEvents = await _eventApiService.GetPublicEventsAsync();
+            foreach (var evt in publicEvents)
+            {
+                Events.Add(evt);
             }
         }
     }
