@@ -27,6 +27,11 @@
 
         <Button Text="Login" BackgroundColor="Red" TextColor="White" Clicked="OnLoginClicked"/>
 
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+            <CheckBox x:Name="StayLoggedInCheckBox" IsChecked="True" />
+            <Label Text="Stay logged in" VerticalOptions="Center" />
+        </StackLayout>
+
         <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
             <Label>
                 <Label.FormattedText>

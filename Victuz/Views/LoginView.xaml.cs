@@ -24,7 +24,12 @@ public partial class LoginView : ContentPage
 
         if (user != null)
         {
-            await SecureStorage.SetAsync("LoggedInUserID", user.ID.ToString());
+            // Sla de status op als de gebruiker "Stay logged in" heeft aangevinkt
+            if (StayLoggedInCheckBox.IsChecked)
+            {
+                await SecureStorage.SetAsync("LoggedInUserID", user.ID.ToString());
+            }
+
             await Navigation.PushAsync(new HomeView());
         }
         else
