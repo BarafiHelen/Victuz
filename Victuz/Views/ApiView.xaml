@@ -23,7 +23,7 @@
         </ListView>
 
         <!-- Knop om evenementen van de API te laden -->
-        
+        <!--API Call checken -->
         <Button Text="Laad Evenementen" 
                 Command="{Binding LoadPublicEventsCommand}"
                 HorizontalOptions="Center" />

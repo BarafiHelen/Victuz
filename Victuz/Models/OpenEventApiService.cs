@@ -11,6 +11,7 @@ namespace Victuz.Services
     {
         private readonly HttpClient _httpClient;
         private const string BaseUrl = "https://open-event-api.herokuapp.com/events";
+        //Geen API Key nodig
 
         public OpenEventApiService()
         {

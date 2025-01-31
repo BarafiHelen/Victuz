@@ -69,6 +69,8 @@ namespace Victuz.ViewModels
             return SelectedEvent != null;
         }
 
+        //Pop API Fix
+
         private async void OnDeleteEvent()
         {
             if (SelectedEvent != null)
