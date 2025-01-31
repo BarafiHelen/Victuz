@@ -42,7 +42,8 @@ public partial class EventDetailsView : ContentPage
                 QRCodeContent = qrContent,
                 QRCodeImage = qrCode // Opslaan als byte-array
             };
-
+            // Stuur gebruiker naar de QR-codepagina
+            await Navigation.PushAsync(new QRScannerView());
             await App.Database.SaveItemAsync(qrCodeModel);
 
             // QR-Code succesvol gegenereerd en opgeslagen

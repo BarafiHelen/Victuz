@@ -1,36 +1,74 @@
-<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:views="clr-namespace:Victuz.Views"
-            x:Class="Victuz.Views.HomeView"
-            BackgroundColor="#FFFFFF"
-            BarBackgroundColor="#FF0000"
-            BarTextColor="White">
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Victuz.ViewModels" 
+             x:Class="Victuz.Views.HomeView"
+             Title="Dashboard"
+             BackgroundColor="#F0F0F0">
+    
+    <ContentPage.BindingContext>
+        <viewmodels:HomeViewModel />
+    </ContentPage.BindingContext>
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="40" Spacing="25">
 
-    <!-- Startpagina met introductie -->
-    <ContentPage Title="Home" IconImageSource="home_icon.png">
-        <VerticalStackLayout Padding="50" Spacing="50">
-            <Label Text="Welkom bij Victuz!"
-                       FontSize="28"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       TextColor="#FF0000" />
-            <Label Text="Navigeer naar verschillende functies van de app via het menu hieronder."
-                       FontSize="16"
-                       HorizontalOptions="Center"
-                       TextColor="#333333" />
-            
-            <Image Source="home_graphic.png"
-                       Aspect="AspectFit"
-                       HeightRequest="200"
-                       HorizontalOptions="Center" />
+            <!-- Welkomstbericht -->
+            <Label Text="Welcome Back!"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   TextColor="#FF0000"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Here's a quick overview of your app's activities."
+                   FontSize="16"
+                   TextColor="#606060"
+                   HorizontalOptions="Center" />
+
+            <Button Text="Go to Profile"
+                    BackgroundColor="#FF0000"
+                    TextColor="White"
+                    CornerRadius="15"
+                    HeightRequest="50"
+                    Command="{Binding NavigateToProfileCommand}" />
+
+            <!-- Activiteiten kaarten -->
+            <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*"
+                  ColumnSpacing="10" RowSpacing="10">
+
+                <!-- Kaart 1: Aantal gebruikers -->
+                <Frame BackgroundColor="White" CornerRadius="10" Padding="15" Grid.Row="0" Grid.Column="0" HasShadow="True">
+                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="Users" FontSize="18" FontAttributes="Bold" TextColor="#FF0000" />
+                        <Label Text="10+" FontSize="24" FontAttributes="Bold" TextColor="#606060" />
+                        <Image Source="user_icon.png" WidthRequest="40" HeightRequest="40" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Kaart 2: Aantal evenementen -->
+                <Frame BackgroundColor="White" CornerRadius="10" Padding="15" Grid.Row="0" Grid.Column="1" HasShadow="True">
+                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="Events" FontSize="18" FontAttributes="Bold" TextColor="#FF0000" />
+                        <Label Text="5+" FontSize="24" FontAttributes="Bold" TextColor="#606060" />
+                        <Image Source="event_icon.png" WidthRequest="40" HeightRequest="40" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Kaart 3: Toekomstige evenementen -->
+                <Frame BackgroundColor="White" CornerRadius="10" Padding="15" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HasShadow="True">
+                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="Upcoming Events" FontSize="18" FontAttributes="Bold" TextColor="#FF0000" />
+                        <Label Text="3 events scheduled" FontSize="16" TextColor="#606060" />
+                        <Button Text="View Details"
+                                BackgroundColor="#FF0000"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Command="{Binding NavigateToEventsCommand}" />
+                    </VerticalStackLayout>
+                </Frame>
+
+            </Grid>
+
         </VerticalStackLayout>
-    </ContentPage>
-
-    <!-- Andere pagina's in het menu -->
-    <views:EventView Title="Events" IconImageSource="event_icon.png" />
-    <views:ProfileView Title="Profiel" IconImageSource="profile_icon.png" />
-    <views:QRScannerView Title="QR Scanner" IconImageSource="qr_icon.png" />
-    <views:ReviewView Title="Reviews" IconImageSource="review_icon.png" />
-    <views:UserView Title="Users" IconImageSource="user_icon.png" />
-
-</TabbedPage>
+    </ScrollView>
+</ContentPage>
