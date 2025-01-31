@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Victuz.Views.ApiView"
+             Title="API View">
+
+    <VerticalStackLayout Padding="10">
+        <!-- Titel -->
+        <Label 
+            Text="Evenementen van de API"
+            FontSize="24"
+            HorizontalOptions="Center" />
+
+        <!-- Lijst om evenementen weer te geven -->
+        <ListView x:Name="EventsListView" 
+                  IsPullToRefreshEnabled="True" 
+                  RefreshCommand="{Binding LoadPublicEventsCommand}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Title}" Detail="{Binding Location}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Knop om evenementen van de API te laden -->
+        <!--API Call checken -->
+        <Button Text="Laad Evenementen" 
+                Command="{Binding LoadPublicEventsCommand}"
+                HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>
