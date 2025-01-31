@@ -8,7 +8,7 @@
 
     <!-- Startpagina met introductie -->
     <ContentPage Title="Home" IconImageSource="home_icon.png">
-        <VerticalStackLayout Padding="20" Spacing="15">
+        <VerticalStackLayout Padding="50" Spacing="50">
             <Label Text="Welkom bij Victuz!"
                        FontSize="28"
                        FontAttributes="Bold"
@@ -31,6 +31,6 @@
     <views:ProfileView Title="Profiel" IconImageSource="profile_icon.png" />
     <views:QRScannerView Title="QR Scanner" IconImageSource="qr_icon.png" />
     <views:ReviewView Title="Reviews" IconImageSource="review_icon.png" />
-    <views:UserView Title="Gebruikers" IconImageSource="user_icon.png" />
+    <views:UserView Title="Users" IconImageSource="user_icon.png" />
 
 </TabbedPage>

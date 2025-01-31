@@ -4,7 +4,7 @@
              x:Class="Victuz.Views.ReviewView"
              Title="Review"
              BackgroundColor="White">
-    <VerticalStackLayout Padding="20">
+    <VerticalStackLayout Padding="20" Spacing="15">
         <Label Text="Leave a Review" FontSize="24" TextColor="Black" HorizontalOptions="Center"/>
         <Editor Placeholder="Write your review here..." BackgroundColor="LightGray" TextColor="Black" HeightRequest="100"/>
         <HorizontalStackLayout HorizontalOptions="Center">

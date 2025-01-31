@@ -6,7 +6,7 @@
              Title="QR Scanner"
              BackgroundColor="White">
 
-    <VerticalStackLayout Padding="20">
+    <VerticalStackLayout Padding="20" Spacing="15">
 
         <Label Text="Scan QR Code" FontSize="24" TextColor="Black" HorizontalOptions="Center"/>
         <Button Text="Start Scanner" BackgroundColor="Red" TextColor="White" Clicked="OnStartScannerClicked"/>

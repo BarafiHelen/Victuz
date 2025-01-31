@@ -11,7 +11,7 @@ namespace Victuz.Models
         public string? Name { get; set; }
         [MaxLength(15)]
         public string? PhoneNumber { get; set; }
-        [MaxLength(50), Unique]
+        [MaxLength(50)]
         public string EmailAddress { get; set; } = string.Empty;
 
         [MaxLength(50)]

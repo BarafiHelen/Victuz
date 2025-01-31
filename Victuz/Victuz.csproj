@@ -80,6 +80,9 @@
 	  <MauiXaml Update="Views\AddEventView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AddUserView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ApiView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
