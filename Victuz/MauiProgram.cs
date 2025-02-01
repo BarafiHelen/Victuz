@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using Victuz.Services;
 using ZXing.Net.Maui;
+using SkiaSharp;
+using SkiaSharp.Views.Maui.Controls;
 using ZXing.Net.Maui.Controls;
 
 namespace Victuz

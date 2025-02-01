@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Victuz.Views.QRCodeView"
+             Title="Your QR Code"
+             BackgroundColor="White">
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label Text="Here is your QR Code!" FontSize="24" TextColor="Black" HorizontalOptions="Center"/>
+        <Image x:Name="QRCodeImage" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Button Text="Back to Events" BackgroundColor="Red" TextColor="White" Clicked="OnBackClicked"/>
+    </VerticalStackLayout>
+</ContentPage>

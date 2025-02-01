@@ -32,5 +32,14 @@ namespace Victuz.Services
         {
             return await _database.DeleteAsync(item);
         }
+        public async Task<QRCode> GetQRCodeAsync(int userId, int eventId)
+        {
+            return await _database.Table<QRCode>().FirstOrDefaultAsync(qr => qr.UserID == userId && qr.EventID == eventId);
+        }
+        public async Task<bool> ValidateQRCodeAsync(int userId, int eventId, string qrCodeContent)
+        {
+            var qrCode = await GetQRCodeAsync(userId, eventId);
+            return qrCode != null && qrCode.QRCodeContent == qrCodeContent;
+        }
     }
 }

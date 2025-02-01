@@ -35,7 +35,8 @@ namespace Victuz.ViewModels
         }
 
         public ICommand NavigateToEventsCommand { get; }
-       
+        public ICommand NavigateToProfileCommand { get; }
+
         public HomeViewModel()
         {
             LoadDashboardData();

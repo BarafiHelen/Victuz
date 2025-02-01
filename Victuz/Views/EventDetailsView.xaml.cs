@@ -1,4 +1,7 @@
 using Victuz.Models;
+using ZXing.Net.Maui;
+using SkiaSharp;
+using SkiaSharp.Views.Maui.Controls;
 using System.Drawing;
 using System.Drawing.Imaging;
 namespace Victuz.Views;
@@ -43,7 +46,7 @@ public partial class EventDetailsView : ContentPage
                 QRCodeImage = qrCode // Opslaan als byte-array
             };
             // Stuur gebruiker naar de QR-codepagina
-            await Navigation.PushAsync(new QRScannerView());
+            await Navigation.PushAsync(new QRCodeView(qrCode));
             await App.Database.SaveItemAsync(qrCodeModel);
 
             // QR-Code succesvol gegenereerd en opgeslagen
@@ -56,28 +59,38 @@ public partial class EventDetailsView : ContentPage
     }
     private byte[] GenerateQRCode(string content)
     {
-        /*
-        var writer = new ZXing.Common.BarcodeWriter
+        var writer = new ZXing.BarcodeWriterPixelData
         {
             Format = ZXing.BarcodeFormat.QR_CODE,
             Options = new ZXing.Common.EncodingOptions
             {
                 Width = 300,
-                Height = 300
+                Height = 300,
+                Margin = 1
             }
         };
 
-        // Genereer QR-code als bitmap
-        var bitmap = writer.Write(content);
+        var pixelData = writer.Write(content);
 
-        using (var stream = new MemoryStream())
+        using (var bitmap = new SKBitmap(pixelData.Width, pixelData.Height, SKColorType.Rgba8888, SKAlphaType.Premul))
         {
-            bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-            return stream.ToArray();
+            bitmap.InstallPixels(pixelData.Pixels);
+
+            using (var stream = new MemoryStream())
+            {
+                bitmap.Encode(stream, SKEncodedImageFormat.Png, 100);
+                return stream.ToArray(); // Converteer naar een byte-array
+            }
         }
-        */
-        return null;
     }
+    private SKBitmap ByteArrayToBitmap(byte[] imageData)
+    {
+        using (var stream = new MemoryStream(imageData))
+        {
+            return SKBitmap.Decode(stream);
+        }
+    }
+    
 
     // Back knop
     private async void OnBackClicked(object sender, EventArgs e)
