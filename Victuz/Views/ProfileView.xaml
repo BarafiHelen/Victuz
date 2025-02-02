@@ -8,30 +8,37 @@
              BackgroundColor="White">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
-            <!-- Titel -->
             <Label Text="Mijn Profiel" FontSize="28" FontAttributes="Bold" TextColor="#FF0000" HorizontalOptions="Center"/>
 
-            <!-- Gebruikersgegevens -->
+            <!-- Profielfoto -->
+            <Frame WidthRequest="150" HeightRequest="150" CornerRadius="75" BorderColor="Gray" HorizontalOptions="Center">
+                <Image Source="{Binding ProfileImage}" WidthRequest="150" HeightRequest="150"/>
+            </Frame>
+
+            <!-- Foto uploaden of maken -->
+            <Button Text="Profielfoto kiezen"
+                BackgroundColor="#FF0000"
+                TextColor="White"
+                Command="{Binding PickProfileImageCommand}" />
+
             <Entry Text="{Binding Name}" Placeholder="Volledige naam" TextColor="#333333" BackgroundColor="#F0F0F0" />
             <Entry Text="{Binding Email}" Placeholder="E-mailadres" TextColor="#333333" BackgroundColor="#F0F0F0" IsReadOnly="True" />
             <Entry Text="{Binding PhoneNumber}" Placeholder="Telefoonnummer" TextColor="#333333" BackgroundColor="#F0F0F0" />
 
-            <!-- Opslaan knop -->
             <Button Text="Wijzigingen opslaan"
-                    BackgroundColor="#FF0000"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    HeightRequest="50"
-                    Command="{Binding SaveCommand}" />
+                BackgroundColor="#FF0000"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="10"
+                HeightRequest="50"
+                Command="{Binding SaveCommand}" />
 
-            <!-- Back knop -->
             <Button Text="Terug"
-                    BackgroundColor="#CCCCCC"
-                    TextColor="#333333"
-                    CornerRadius="10"
-                    HeightRequest="50"
-                    Clicked="OnBackClicked" />
+                BackgroundColor="#CCCCCC"
+                TextColor="#333333"
+                CornerRadius="10"
+                HeightRequest="50"
+                Clicked="OnBackClicked" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
