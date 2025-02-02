@@ -1,5 +1,7 @@
 ﻿using MvvmHelpers;
 using System.Windows.Input;
+using Microsoft.Maui.Media;
+using Microsoft.Maui.Storage;
 
 namespace Victuz.ViewModels;
 
@@ -10,6 +12,7 @@ public class ProfileViewModel : BaseViewModel
     private string _name;
     private string _email;
     private string _phoneNumber;
+    private string _profilePhoto;
 
     public string Name
     {
@@ -29,7 +32,15 @@ public class ProfileViewModel : BaseViewModel
         set => SetProperty(ref _phoneNumber, value);
     }
 
+    public string ProfilePhoto
+    {
+        get => _profilePhoto;
+        set => SetProperty(ref _profilePhoto, value);
+    }
+
     public ICommand SaveCommand { get; }
+    public ICommand PickPhotoCommand { get; }
+    public ICommand TakePhotoCommand { get; }
 
     private ProfileViewModel()
     {
@@ -39,6 +50,8 @@ public class ProfileViewModel : BaseViewModel
         PhoneNumber = "123";
 
         SaveCommand = new Command(SaveProfile);
+        PickPhotoCommand = new Command(async () => await PickPhoto());
+        TakePhotoCommand = new Command(async () => await TakePhoto());
     }
 
     private async void SaveProfile()
@@ -58,5 +71,27 @@ public class ProfileViewModel : BaseViewModel
 
         // Sla wijzigingen op (bijvoorbeeld in de database)
         await App.Current.MainPage.DisplayAlert("Succes", "Profiel succesvol bijgewerkt!", "OK");
+    }
+
+    private async Task PickPhoto()
+    {
+        var result = await MediaPicker.PickPhotoAsync();
+        if (result != null)
+        {
+            ProfilePhoto = result.FullPath;
+        }
+    }
+
+    private async Task TakePhoto()
+    {
+        var result = await MediaPicker.CapturePhotoAsync();
+        if (result != null)
+        {
+            var newFile = Path.Combine(FileSystem.AppDataDirectory, "profile_photo.jpg");
+            using var stream = await result.OpenReadAsync();
+            using var newStream = File.OpenWrite(newFile);
+            await stream.CopyToAsync(newStream);
+            ProfilePhoto = newFile;
+        }
     }
 }
