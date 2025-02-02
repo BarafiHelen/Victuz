@@ -11,12 +11,7 @@
         <Label Text="Scan QR Code" FontSize="24" TextColor="Black" HorizontalOptions="Center"/>
 
         <!-- QR Code Scanner -->
-        <zxing:CameraView x:Name="cameraView"
-                          BarcodeDetected="CameraView_OnDetected"
-                          IsScanning="True"
-                          IsTorchOn="False"
-                          HorizontalOptions="center"
-                          VerticalOptions="center" />
+        
         
         <Label x:Name="ResultLabel" Text="Scan result will appear here." TextColor="Black" HorizontalOptions="Center"/>
 
