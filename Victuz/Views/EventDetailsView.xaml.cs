@@ -74,7 +74,7 @@ public partial class EventDetailsView : ContentPage
 
         using (var bitmap = new SKBitmap(pixelData.Width, pixelData.Height, SKColorType.Rgba8888, SKAlphaType.Premul))
         {
-            bitmap.InstallPixels(pixelData.Pixels);
+            //bitmap.InstallPixels(pixelData.Pixels);
 
             using (var stream = new MemoryStream())
             {

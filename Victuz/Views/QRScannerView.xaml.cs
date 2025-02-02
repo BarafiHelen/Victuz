@@ -9,7 +9,7 @@ namespace Victuz.Views
     {
         public QRScannerView(int eventId)
         {
-            InitializeComponent();
+            //InitializeComponent();
             _eventId = eventId;
         }
         private readonly int _eventId;
@@ -20,7 +20,7 @@ namespace Victuz.Views
             {
                 await Dispatcher.DispatchAsync(async () =>
                 {
-                    ResultLabel.Text = $"Scanned QR Code: {result}";
+                    //ResultLabel.Text = $"Scanned QR Code: {result}";
 
                     // Controleer de QR-code in de database
                     var qrCode = await App.Database.GetQRCodeAsync(userId: 1, eventId: 1); 
@@ -38,7 +38,7 @@ namespace Victuz.Views
 
         private void OnStartScannerClicked(object sender, EventArgs e)
         {
-            cameraView.IsTorchOn = !cameraView.IsTorchOn;
+            //cameraView.IsTorchOn = !cameraView.IsTorchOn;
         }
     }
 }
