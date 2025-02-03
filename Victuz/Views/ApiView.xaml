@@ -7,7 +7,7 @@
     <VerticalStackLayout Padding="10">
         <!-- Titel -->
         <Label 
-            Text="Weergegevens"
+            Text="Weergegevens om te controleren of het wel goed weer wordt op het event"
             FontSize="24"
             HorizontalOptions="Center" />
 
