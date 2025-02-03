@@ -30,7 +30,7 @@ public partial class LoginView : ContentPage
                 await SecureStorage.SetAsync("LoggedInUserID", user.ID.ToString());
             }
 
-            await Navigation.PushAsync(new HomeView());
+            await Navigation.PushAsync(new AppShell());
         }
         else
         {

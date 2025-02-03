@@ -6,7 +6,7 @@ namespace Victuz.Views;
 public partial class EventView : ContentPage
 {
     public ObservableCollection<Event> Events { get; set; } = new ObservableCollection<Event>();
-    //private List<Event> _allEvents = new List<Event>();
+    
 
     public ListView EventListViewPublic => EventListView;
 

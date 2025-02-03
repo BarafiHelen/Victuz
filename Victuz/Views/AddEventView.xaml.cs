@@ -40,9 +40,9 @@ public partial class AddEventView : ContentPage
         await App.Database.SaveItemAsync(newEvent);
         await DisplayAlert("Success", "Event added successfully!", "OK");
 
-        // Events.Add(newEvent);
-        // EventListView.ItemsSource = null; // Forceer UI-verversing
-        //  EventListView.ItemsSource = Events;
+       // Events.Add(newEvent);
+       // EventListView.ItemsSource = null; // Forceer UI-verversing
+       // EventListView.ItemsSource = Events;
 
         if (Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault() is EventView eventView)
         {

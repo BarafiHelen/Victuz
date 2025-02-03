@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="Victuz.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:Victuz.Views"
-    Title="Victuz">
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:Victuz.Views"
+       x:Class="Victuz.AppShell"
+       FlyoutBackgroundColor="#FF0000" 
+       Title="Victuz">
 
-    <TabBar>
-        <Tab Title="Users">
-            <ShellContent ContentTemplate="{DataTemplate views:UserView}" />
-        </Tab>
-        <Tab Title="Events">
-            <ShellContent ContentTemplate="{DataTemplate views:EventView}" />
-        </Tab>
-        <Tab Title="Profile">
-            <ShellContent ContentTemplate="{DataTemplate views:ProfileView}" />
-        </Tab>
-    </TabBar>
+    <!-- Flyout Menu voor Navigatie -->
+    <FlyoutItem Title="Home" FlyoutDisplayOptions="AsSingleItem" Icon="home_icon.png">
+        <ShellContent Title="Home" ContentTemplate="{DataTemplate views:HomeView}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Events" FlyoutDisplayOptions="AsSingleItem" Icon="event_icon.png">
+        <ShellContent Title="Events" ContentTemplate="{DataTemplate views:EventView}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Profile" FlyoutDisplayOptions="AsSingleItem" Icon="profile_icon.png">
+        <ShellContent Title="Profile" ContentTemplate="{DataTemplate views:ProfileView}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Users" FlyoutDisplayOptions="AsSingleItem" Icon="user_icon.png">
+        <ShellContent Title="Users" ContentTemplate="{DataTemplate views:UserView}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Reviews" FlyoutDisplayOptions="AsSingleItem" Icon="review_icon.png">
+        <ShellContent Title="Reviews" ContentTemplate="{DataTemplate views:ReviewView}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="QR Scanner" FlyoutDisplayOptions="AsSingleItem" Icon="qr_icon.png">
+        <ShellContent Title="QR Scanner" ContentTemplate="{DataTemplate views:QRScannerView}" />
+    </FlyoutItem>
 </Shell>

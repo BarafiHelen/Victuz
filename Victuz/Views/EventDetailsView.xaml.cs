@@ -83,14 +83,6 @@ public partial class EventDetailsView : ContentPage
             }
         }
     }
-    private SKBitmap ByteArrayToBitmap(byte[] imageData)
-    {
-        using (var stream = new MemoryStream(imageData))
-        {
-            return SKBitmap.Decode(stream);
-        }
-    }
-    
 
     // Back knop
     private async void OnBackClicked(object sender, EventArgs e)
