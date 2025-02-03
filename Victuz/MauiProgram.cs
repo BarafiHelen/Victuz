@@ -4,6 +4,7 @@ using ZXing.Net.Maui;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
 using ZXing.Net.Maui.Controls;
+using Plugin.Maui.ScreenBrightness;
 
 namespace Victuz
 {
@@ -21,6 +22,8 @@ namespace Victuz
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            builder.Services.AddSingleton(ScreenBrightness.Default);
                
 
             // Dependency Injection instellen
