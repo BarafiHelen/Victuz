@@ -27,8 +27,9 @@
         <!-- Lijst met events (neemt de meeste ruimte in) -->
         <Frame BackgroundColor="White" CornerRadius="10" Padding="5" HasShadow="True" Grid.Row="2">
             <ListView x:Name="EventListView"
+                      ItemsSource="{Binding Events}"
+                      SelectedItem="{Binding SelectedEvent}"
                       SelectionMode="Single"
-                      ItemSelected="OnEventSelected"
                       BackgroundColor="Transparent"
                       HasUnevenRows="True">
                 <ListView.ItemTemplate>

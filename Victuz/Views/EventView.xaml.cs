@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using Victuz.Models;
+using Victuz.ViewModels;
 
 namespace Victuz.Views;
 
@@ -13,7 +14,7 @@ public partial class EventView : ContentPage
     public EventView()
     {
         InitializeComponent();
-        BindingContext = this;
+        BindingContext = new EventViewModel(); ;
     }
 
     protected override async void OnAppearing()
