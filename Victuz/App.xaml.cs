@@ -17,6 +17,6 @@ public partial class App : Application
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Victuz.db3");
         Database = new DatabaseService(dbPath);
 
-        MainPage = new NavigationPage(new ApiView());
+        MainPage = new NavigationPage(new HomeView());
     }
 }
