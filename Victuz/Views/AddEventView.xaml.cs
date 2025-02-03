@@ -39,10 +39,15 @@ public partial class AddEventView : ContentPage
 
         await App.Database.SaveItemAsync(newEvent);
         await DisplayAlert("Success", "Event added successfully!", "OK");
-
-       // Events.Add(newEvent);
-       // EventListView.ItemsSource = null; // Forceer UI-verversing
-       // EventListView.ItemsSource = Events;
+       
+        // Controleer of het evenement is opgeslagen
+        var allEvents = await App.Database.GetItemsAsync<Event>();
+        foreach (var evt in allEvents)
+        {
+            Console.WriteLine($"Event in database: {evt.Title}, {evt.Date}");
+       
+        }
+       
 
         if (Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault() is EventView eventView)
         {

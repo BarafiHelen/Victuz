@@ -46,12 +46,21 @@ namespace Victuz.ViewModels
             {
                 IsBusy = true;
 
+                Console.WriteLine("Loading events from the database...");
                 var events = await _databaseService.GetItemsAsync<Event>();
-                Events.Clear();
 
-                foreach (var ev in events)
+                if (events != null)
                 {
-                    Events.Add(ev);
+                    Events.Clear();
+                    foreach (var ev in events)
+                    {
+                        Console.WriteLine($"Loaded Event: {ev.Title}, {ev.Date}");
+                        Events.Add(ev);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No events found in the database.");
                 }
             }
             catch (Exception ex)
