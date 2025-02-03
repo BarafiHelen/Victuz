@@ -2,30 +2,23 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Victuz.Views.ApiView"
-             Title="API View">
+             Title="Weer API">
 
     <VerticalStackLayout Padding="10">
         <!-- Titel -->
         <Label 
-            Text="Evenementen van de API"
+            Text="Weergegevens"
             FontSize="24"
             HorizontalOptions="Center" />
 
-        <!-- Lijst om evenementen weer te geven -->
-        <ListView x:Name="EventsListView" 
-                  IsPullToRefreshEnabled="True" 
-                  RefreshCommand="{Binding LoadPublicEventsCommand}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Title}" Detail="{Binding Location}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <!-- Weergegevens -->
+        <Label Text="{Binding WeatherDescription}"
+               FontSize="18"
+               HorizontalOptions="Center" />
 
-        <!-- Knop om evenementen van de API te laden -->
-        <!--API Call checken -->
-        <Button Text="Laad Evenementen" 
-                Command="{Binding LoadPublicEventsCommand}"
+        <!-- Knop om het weer op te halen -->
+        <Button Text="Laad Weer"
+                Command="{Binding LoadWeatherCommand}"
                 HorizontalOptions="Center" />
     </VerticalStackLayout>
 </ContentPage>
